@@ -62,26 +62,26 @@ export default function Landing() {
             <span style={{ color: '#4f8ef7' }}>Med</span><span style={{ color: '#2dd98f' }}>Track</span>
           </span>
         </Link>
-<div style={{ display: 'flex', gap: '36px', alignItems: 'center' }} className="hide-mobile">
-  {[{ label: 'Home', id: 'home' }, { label: 'Features', id: 'features' }, { label: 'How it works', id: 'how-it-works' }, { label: 'Contact', id: 'contact' }].map(link => (
-    <button key={link.id} onClick={() => scrollTo(link.id)} style={{
-      fontSize: '18px',
-      fontWeight: '500',
-      color: '#c8d6e8',
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      padding: '4px 0',
-      fontFamily: 'Syne, sans-serif',
-      letterSpacing: '0.2px',
-      transition: 'color 0.2s ease',
-      position: 'relative',
-    }}
-      onMouseEnter={e => e.currentTarget.style.color = '#ffffff'}
-      onMouseLeave={e => e.currentTarget.style.color = '#c8d6e8'}
-    >{link.label}</button>
-  ))}
-</div>
+        <div style={{ display: 'flex', gap: '36px', alignItems: 'center' }} className="hide-mobile">
+        {[{ label: 'Home', id: 'home' }, { label: 'Features', id: 'features' }, { label: 'How it works', id: 'how-it-works' }, { label: 'Contact', id: 'contact' }].map(link => (
+        <button key={link.id} onClick={() => scrollTo(link.id)} style={{
+          fontSize: '18px',
+          fontWeight: '500',
+          color: '#c8d6e8',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          padding: '4px 0',
+          fontFamily: 'Syne, sans-serif',
+          letterSpacing: '0.2px',
+          transition: 'color 0.2s ease',
+          position: 'relative',
+        }}
+        onMouseEnter={e => e.currentTarget.style.color = '#ffffff'}
+        onMouseLeave={e => e.currentTarget.style.color = '#c8d6e8'}
+        >{link.label}</button>
+        ))}
+        </div>
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <Link to="/login"><button style={{ padding: '8px 18px', borderRadius: '8px', fontSize: '14px', color: '#7d8faa', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', transition: 'all .2s', fontFamily: 'DM Sans, sans-serif' }}
             onMouseEnter={e => { e.currentTarget.style.color = '#eef2ff'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
@@ -109,11 +109,11 @@ export default function Landing() {
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2dd98f', display: 'inline-block', animation: 'pulse 2s ease infinite' }} />
           AI-Powered · Free to use · Trusted by families
         </div>
-        <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(36px,6.5vw,68px)', fontWeight: '800', letterSpacing: '-2px', lineHeight: 1.1, maxWidth: '820px', marginBottom: '20px', color: '#eef2ff' }}>
+        <h1 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(36px,6.5vw,68px)', fontWeight: '700', letterSpacing: '-2px', lineHeight: 1.1, maxWidth: '820px', marginBottom: '20px', color: '#eef2ff' }}>
           Your family's medicine cabinet,{' '}
           <span style={{ background: 'linear-gradient(135deg, #4f8ef7, #2dd98f)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>always safe.</span>
         </h1>
-        <p style={{ fontSize: 'clamp(15px,2vw,18px)', color: '#7d8faa', maxWidth: '520px', lineHeight: '1.7', marginBottom: '36px' }}>
+        <p style={{ fontSize: 'clamp(15px,2vw,18px)', color: '#bbc6d6', maxWidth: '520px', lineHeight: '1.7', marginBottom: '36px' }}>
           Scan medicine labels with your camera, track expiry dates, get daily email alerts, and ask AI anything — all in one free app.
         </p>
         <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '60px' }}>
