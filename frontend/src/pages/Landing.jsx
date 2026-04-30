@@ -58,18 +58,30 @@ export default function Landing() {
       }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
           <img src="/icon.png" alt="MedTrack" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
-          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: '700', fontSize: '18px', letterSpacing: '-0.4px' }}>
+          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: '700', fontSize: '25px', letterSpacing: '-0.4px' }}>
             <span style={{ color: '#4f8ef7' }}>Med</span><span style={{ color: '#2dd98f' }}>Track</span>
           </span>
         </Link>
-        <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }} className="hide-mobile">
-          {[{ label: 'Home', id: 'home' }, { label: 'Features', id: 'features' }, { label: 'How it works', id: 'how-it-works' }, { label: 'Contact', id: 'contact' }].map(link => (
-            <button key={link.id} onClick={() => scrollTo(link.id)} style={navLinkStyle}
-              onMouseEnter={e => e.currentTarget.style.color = '#eef2ff'}
-              onMouseLeave={e => e.currentTarget.style.color = '#7d8faa'}
-            >{link.label}</button>
-          ))}
-        </div>
+<div style={{ display: 'flex', gap: '36px', alignItems: 'center' }} className="hide-mobile">
+  {[{ label: 'Home', id: 'home' }, { label: 'Features', id: 'features' }, { label: 'How it works', id: 'how-it-works' }, { label: 'Contact', id: 'contact' }].map(link => (
+    <button key={link.id} onClick={() => scrollTo(link.id)} style={{
+      fontSize: '18px',
+      fontWeight: '500',
+      color: '#c8d6e8',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      padding: '4px 0',
+      fontFamily: 'Syne, sans-serif',
+      letterSpacing: '0.2px',
+      transition: 'color 0.2s ease',
+      position: 'relative',
+    }}
+      onMouseEnter={e => e.currentTarget.style.color = '#ffffff'}
+      onMouseLeave={e => e.currentTarget.style.color = '#c8d6e8'}
+    >{link.label}</button>
+  ))}
+</div>
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <Link to="/login"><button style={{ padding: '8px 18px', borderRadius: '8px', fontSize: '14px', color: '#7d8faa', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', transition: 'all .2s', fontFamily: 'DM Sans, sans-serif' }}
             onMouseEnter={e => { e.currentTarget.style.color = '#eef2ff'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
