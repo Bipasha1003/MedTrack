@@ -25,7 +25,7 @@ A full-stack web app that helps families track medicine expiry dates using AI la
 
 | Landing Page | Dashboard | AI Chat |
 |---|---|---|
-| ![Landing](medicine-tracker/frontend/public/Screenshots/Landing.png) | ![Dashboard](medicine-tracker/frontend/public/Screenshots/Dashboard.png) | ![Chat](medicine-tracker/frontend/public/Screenshots/AI-Chat.png) |
+| ![Landing]([medicine-tracker/frontend/public/Screenshots/Landing.png](https://github.com/Bipasha1003/MedTrack/blob/main/frontend/public/Screenshots/Landing.png)) | ![Dashboard](medicine-tracker/frontend/public/Screenshots/Dashboard.png) | ![Chat](medicine-tracker/frontend/public/Screenshots/AI-Chat.png) |
 
 
 ---
