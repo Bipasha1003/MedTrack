@@ -11,7 +11,7 @@ const { checkAndSendAlerts } = require('./lib/emailAlert');
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://your-app-name.netlify.app'  // add this after you get netlify URL
+    'https://medtrack-bm.netlify.app'  // add this after you get netlify URL
   ],
   credentials: true
 }));
