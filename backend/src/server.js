@@ -9,7 +9,10 @@ const { checkAndSendAlerts } = require('./lib/emailAlert');
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // React app URL
+  origin: [
+    'http://localhost:5173',
+    'https://your-app-name.netlify.app'  // add this after you get netlify URL
+  ],
   credentials: true
 }));
 app.use(express.json());
