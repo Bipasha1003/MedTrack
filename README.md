@@ -15,7 +15,7 @@
 
 A full-stack web app that helps families track medicine expiry dates using AI label scanning, multilingual chat, and daily email alerts.
 
-[Live Demo](#) · [Report Bug](mailto:meditrackerexpire@gmail.com) · [Request Feature](mailto:meditrackerexpire@gmail.com)
+[Live Demo](https://medtrack-app.vercel.app) · [Report Bug](mailto:meditrackerexpire@gmail.com) · [Request Feature](mailto:meditrackerexpire@gmail.com)
 
 </div>
 
@@ -25,7 +25,8 @@ A full-stack web app that helps families track medicine expiry dates using AI la
 
 | Landing Page | Dashboard | AI Chat |
 |---|---|---|
-| ![Landing](https://via.placeholder.com/280x160/070b12/4f8ef7?text=Landing+Page) | ![Dashboard](https://via.placeholder.com/280x160/070b12/2dd98f?text=Dashboard) | ![Chat](https://via.placeholder.com/280x160/070b12/f59e0b?text=AI+Chat) |
+| ![Landing](medicine-tracker/frontend/public/Screenshots/Leading.png) | ![Dashboard](medicine-tracker/frontend/public/Screenshots/Dashboard.png) | ![Chat](medicine-tracker/frontend/public/Screenshots/AI-Chat.png) |
+
 
 ---
 
@@ -52,7 +53,7 @@ A full-stack web app that helps families track medicine expiry dates using AI la
 | Axios | HTTP requests to backend |
 | React Dropzone | Image upload for scanning |
 | React Hot Toast | Notifications |
-| DM Sans + Syne | Typography |
+| DM Sans + Syne + Outfit | Typography |
 
 ### Backend
 | Technology | Purpose |
@@ -68,7 +69,8 @@ A full-stack web app that helps families track medicine expiry dates using AI la
 ### AI & External Services
 | Service | Purpose |
 |---|---|
-| Google Gemini 2.0 Flash | Medicine label OCR + AI chat |
+| Google Gemini 2.5 Flash | Medicine label OCR + AI chat |
+| Web Speech API | Voice input in 19 languages |
 | Supabase | PostgreSQL database hosting |
 | Gmail SMTP | Email alert delivery |
 
@@ -110,7 +112,7 @@ createdAt                     quantity
 **1. Clone the repository**
 ```bash
 git clone https://github.com/Bipasha1003/MedTrack.git
-cd MedTrack
+cd MedTrack/medicine-tracker
 ```
 
 **2. Setup Backend**
@@ -122,12 +124,14 @@ npm install
 Create `.env` file in the `backend` folder:
 ```env
 DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@db.YOUR_PROJECT.supabase.co:5432/postgres"
-JWT_SECRET="your-random-secret-key"
+JWT_SECRET="your-random-secret-key-make-it-long"
 GEMINI_API_KEY="your-gemini-api-key"
 GMAIL_USER="your-gmail@gmail.com"
 GMAIL_PASS="your-16-char-app-password"
 PORT=5000
 ```
+
+> ⚠️ Never commit your real `.env` file. Use `.env.example` as a reference template.
 
 Initialize database:
 ```bash
@@ -147,7 +151,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser.
+Open `http://localhost:5173` in your browser. ✅
 
 ---
 
@@ -158,7 +162,7 @@ Open `http://localhost:5173` in your browser.
 | Variable | Description | How to get |
 |---|---|---|
 | `DATABASE_URL` | Supabase PostgreSQL connection string | Supabase Dashboard → Settings → Database |
-| `JWT_SECRET` | Any random long string | Make one up |
+| `JWT_SECRET` | Any random long string | Make one up (e.g. use a UUID) |
 | `GEMINI_API_KEY` | Google Gemini API key | [aistudio.google.com](https://aistudio.google.com) |
 | `GMAIL_USER` | Gmail address to send alerts from | Your Gmail address |
 | `GMAIL_PASS` | Gmail App Password (16 chars) | Google Account → Security → App Passwords |
@@ -169,49 +173,53 @@ Open `http://localhost:5173` in your browser.
 
 ```
 MedTrack/
-├── backend/
-│   ├── prisma/
-│   │   └── schema.prisma          # Database schema
-│   ├── src/
-│   │   ├── controllers/
-│   │   │   ├── authController.js  # Login, register, profile
-│   │   │   ├── medicineController.js
-│   │   │   ├── scanController.js  # Gemini AI image scan
-│   │   │   └── chatController.js  # Gemini AI chat
-│   │   ├── routes/
-│   │   │   ├── auth.js
-│   │   │   ├── medicines.js
-│   │   │   ├── scan.js
-│   │   │   └── chat.js
-│   │   ├── middleware/
-│   │   │   └── auth.js            # JWT verification
-│   │   ├── lib/
-│   │   │   ├── prisma.js          # Database connection
-│   │   │   └── emailAlert.js      # Daily expiry email cron
-│   │   └── server.js
-│   └── package.json
-│
-└── frontend/
-    ├── public/
-    │   └── icon.png               # App logo
-    ├── src/
-    │   ├── pages/
-    │   │   ├── Landing.jsx        # Public landing page
-    │   │   ├── Login.jsx
-    │   │   ├── Register.jsx
-    │   │   ├── Dashboard.jsx      # Medicine cabinet
-    │   │   ├── AddMedicine.jsx
-    │   │   ├── Scan.jsx           # AI label scanner
-    │   │   ├── Chat.jsx           # AI assistant
-    │   │   └── Profile.jsx        # Account settings
-    │   ├── components/
-    │   │   └── Navbar.jsx
-    │   ├── context/
-    │   │   └── AuthContext.jsx
-    │   ├── lib/
-    │   │   └── api.js
-    │   └── App.jsx
-    └── package.json
+└── medicine-tracker/
+    ├── backend/
+    │   ├── prisma/
+    │   │   └── schema.prisma          # Database schema
+    │   ├── src/
+    │   │   ├── controllers/
+    │   │   │   ├── authController.js  # Login, register, profile update
+    │   │   │   ├── medicineController.js
+    │   │   │   ├── scanController.js  # Gemini AI image scan
+    │   │   │   └── chatController.js  # Gemini AI multilingual chat
+    │   │   ├── routes/
+    │   │   │   ├── auth.js
+    │   │   │   ├── medicines.js
+    │   │   │   ├── scan.js
+    │   │   │   └── chat.js
+    │   │   ├── middleware/
+    │   │   │   └── auth.js            # JWT verification middleware
+    │   │   ├── lib/
+    │   │   │   ├── prisma.js          # Prisma client singleton
+    │   │   │   └── emailAlert.js      # Daily expiry email cron job
+    │   │   └── server.js
+    │   ├── .env                       # ← never commit this
+    │   ├── .env.example               # ← commit this instead
+    │   └── package.json
+    │
+    └── frontend/
+        ├── public/
+        │   ├── icon.png               # App logo
+        │   └── Screenshots/           # Screenshots for README
+        ├── src/
+        │   ├── pages/
+        │   │   ├── Landing.jsx        # Public landing page
+        │   │   ├── Login.jsx
+        │   │   ├── Register.jsx
+        │   │   ├── Dashboard.jsx      # Medicine cabinet
+        │   │   ├── AddMedicine.jsx
+        │   │   ├── Scan.jsx           # AI label scanner
+        │   │   ├── Chat.jsx           # AI assistant (voice + text)
+        │   │   └── Profile.jsx        # Account settings
+        │   ├── components/
+        │   │   └── Navbar.jsx
+        │   ├── context/
+        │   │   └── AuthContext.jsx
+        │   ├── lib/
+        │   │   └── api.js
+        │   └── App.jsx
+        └── package.json
 ```
 
 ---
@@ -252,7 +260,7 @@ Gmail sends alert if expiring soon
 | POST | `/api/auth/register` | Create account | No |
 | POST | `/api/auth/login` | Login | No |
 | GET | `/api/auth/me` | Get current user | Yes |
-| PUT | `/api/auth/profile` | Update profile | Yes |
+| PUT | `/api/auth/profile` | Update name & phone | Yes |
 | PUT | `/api/auth/change-password` | Change password | Yes |
 
 ### Medicines
@@ -266,8 +274,55 @@ Gmail sends alert if expiring soon
 ### AI Features
 | Method | Endpoint | Description | Auth Required |
 |---|---|---|---|
-| POST | `/api/scan` | Scan medicine label image | Yes |
-| POST | `/api/chat` | AI chat assistant | Yes |
+| POST | `/api/scan` | Scan medicine label image via Gemini | Yes |
+| POST | `/api/chat` | AI chat assistant (multilingual) | Yes |
+
+---
+
+## 🚢 Deployment
+
+### Frontend → Vercel (recommended)
+1. Push your code to GitHub
+2. Go to [vercel.com](https://vercel.com) → **Add New Project** → Import your repo
+3. Set **Root Directory** to `medicine-tracker/frontend`
+4. Add environment variable: `VITE_API_URL=https://your-backend.onrender.com/api`
+5. Click **Deploy** ✅
+
+### Backend → Render (recommended)
+1. Go to [render.com](https://render.com) → **New Web Service**
+2. Connect your GitHub repo
+3. Set **Root Directory** to `medicine-tracker/backend`
+4. **Build command:** `npm install && npx prisma generate`
+5. **Start command:** `node src/server.js`
+6. Add all your `.env` variables under **Environment**
+7. Click **Deploy** ✅
+
+### Update CORS after deployment
+In `backend/src/server.js`, update the CORS origin from `localhost:5173` to your Vercel URL:
+```js
+app.use(cors({
+  origin: 'https://your-app.vercel.app',  // ← update this
+  credentials: true
+}));
+```
+
+---
+
+## 🗺️ Roadmap
+
+- [x] AI medicine label scanner (Gemini Vision)
+- [x] Expiry dashboard with color coding
+- [x] Daily email alerts via Gmail
+- [x] Multilingual AI chat assistant
+- [x] Voice input in 19 languages
+- [x] Profile management (name, phone, password)
+- [x] Responsive design (mobile + desktop)
+- [ ] Mobile app (React Native)
+- [ ] Push notifications
+- [ ] Barcode / QR code scanning
+- [ ] Family cabinet sharing (multiple users)
+- [ ] Medicine reorder reminders
+- [ ] WhatsApp alert integration
 
 ---
 
@@ -277,7 +332,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the project
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+3. Commit your changes (`git commit -m 'feat: add AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
@@ -287,8 +342,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 **Bipasha Mondal**
 - GitHub: [@Bipasha1003](https://github.com/Bipasha1003)
-- LinkedIn: [Bipasha Mondal](https://linkedin.com/in/bipasha-mondal)
-- Email: [meditrackerexpire@gmail.com](mailto:meditrackerexpire@gmail.com)
+- LinkedIn: [Bipasha Mondal](https://www.linkedin.com/in/bipasha-mondal-59aa60244/)
+- Email: [meditrackerexpire@gmail.com](mailto:bipasham103@gmail.com)
 
 ---
 
@@ -303,6 +358,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [Google Gemini AI](https://ai.google.dev) for vision and language capabilities
 - [Supabase](https://supabase.com) for free PostgreSQL hosting
 - [Prisma](https://prisma.io) for excellent ORM
+- [Vercel](https://vercel.com) for frontend hosting
+- [Render](https://render.com) for backend hosting
 - Built with ♥ in Kolkata, India
 
 ---
