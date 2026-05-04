@@ -1,43 +1,47 @@
 const express = require('express');
-const cors = require('cors');
+const cors    = require('cors');
 require('dotenv').config();
 
 const app = express();
-
-// Add to server.js temporarily for testing
-const { checkAndSendAlerts } = require('./lib/emailAlert');
 
 // Middleware
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://medtrack-bm.netlify.app'  // add this after you get netlify URL
+    'https://medtrack-bm.netlify.app'
   ],
-  credentials: true
+  credentials: true,
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes (we'll add these one by one)
+// Routes
 app.use('/api/auth',      require('./routes/auth'));
 app.use('/api/medicines', require('./routes/medicines'));
 app.use('/api/scan',      require('./routes/scan'));
 app.use('/api/chat',      require('./routes/chat'));
 
-// Health check — tells you server is running
+// Health check
 app.get('/', (req, res) => {
-  res.json({ message: 'Medicine Tracker API running' });
+  res.json({ message: 'MedTrack API running ✅' });
 });
 
-app.get('/api/test-email', async (req, res) => {
-  await checkAndSendAlerts();
-  res.json({ message: 'Email check triggered' });
+// Manual email trigger — secured with a secret key
+app.get('/api/send-alerts', async (req, res) => {
+  const { checkAndSendAlerts } = require('./lib/emailAlert');
+  try {
+    await checkAndSendAlerts();
+    res.json({ message: 'Alerts sent successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// Start server
+// Start cron + server
 const PORT = process.env.PORT || 5000;
 const { startCronJob } = require('./lib/emailAlert');
 startCronJob();
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
