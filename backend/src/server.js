@@ -28,6 +28,9 @@ app.get('/', (req, res) => {
 
 // Manual email trigger — secured with a secret key
 app.get('/api/send-alerts', async (req, res) => {
+  if (req.query.secret !== process.env.ALERT_SECRET) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
   const { checkAndSendAlerts } = require('./lib/emailAlert');
   try {
     await checkAndSendAlerts();
