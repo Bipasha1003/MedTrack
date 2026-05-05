@@ -3,7 +3,7 @@ const prisma = require('../lib/prisma');
 const bcrypt = require('bcryptjs');
 const { sendWelcomeEmail } = require('../lib/sendEmail');
 
-// ─── Register ───────────────────────────────────────────────────────────────
+// ─── Register ────────────────────────────────────────────────────────────────
 exports.register = async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
@@ -32,11 +32,12 @@ exports.register = async (req, res) => {
       },
     });
 
-    // Send welcome email (non-blocking)
+    // ── Send welcome email ──
     try {
       await sendWelcomeEmail(user.email, user.name);
     } catch (emailErr) {
-      console.error('Welcome email failed:', emailErr);
+      console.error('Welcome email failed:', emailErr.message);
+      // Don't block registration if email fails
     }
 
     const token = jwt.sign(
@@ -60,7 +61,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// ─── Login ───────────────────────────────────────────────────────────────────
+// ─── Login ────────────────────────────────────────────────────────────────────
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -100,7 +101,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// ─── Get current user ────────────────────────────────────────────────────────
+// ─── Get current user ─────────────────────────────────────────────────────────
 exports.getMe = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
@@ -125,7 +126,7 @@ exports.getMe = async (req, res) => {
   }
 };
 
-// ─── Update profile (name, email, phone) ─────────────────────────────────────
+// ─── Update profile ───────────────────────────────────────────────────────────
 exports.updateProfile = async (req, res) => {
   try {
     const { name, email, phone } = req.body;
@@ -134,7 +135,6 @@ exports.updateProfile = async (req, res) => {
       return res.status(400).json({ error: 'Name and email are required' });
     }
 
-    // Check if another user already owns the new email
     if (email) {
       const existing = await prisma.user.findUnique({ where: { email } });
       if (existing && existing.id !== req.user.userId) {
@@ -170,7 +170,6 @@ exports.changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
 
-    // Validate inputs
     if (!currentPassword || !newPassword) {
       return res.status(400).json({ error: 'All password fields are required' });
     }
@@ -183,7 +182,6 @@ exports.changePassword = async (req, res) => {
       return res.status(400).json({ error: 'New password must be different from current password' });
     }
 
-    // Fetch user from DB (need the hashed password)
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
     });
@@ -196,13 +194,11 @@ exports.changePassword = async (req, res) => {
       return res.status(400).json({ error: 'No password set for this account' });
     }
 
-    // Verify current password is correct
     const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) {
       return res.status(400).json({ error: 'Current password is incorrect' });
     }
 
-    // Hash the new password and save it
     const hashed = await bcrypt.hash(newPassword, 10);
 
     await prisma.user.update({
