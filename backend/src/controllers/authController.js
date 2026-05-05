@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const prisma = require('../lib/prisma');
 const bcrypt = require('bcryptjs');
+const { sendWelcomeEmail } = require('../lib/sendEmail');
 
 // ─── Register ───────────────────────────────────────────────────────────────
 exports.register = async (req, res) => {
@@ -30,6 +31,13 @@ exports.register = async (req, res) => {
         phone: phone || null,
       },
     });
+
+    // Send welcome email (non-blocking)
+    try {
+      await sendWelcomeEmail(user.email, user.name);
+    } catch (emailErr) {
+      console.error('Welcome email failed:', emailErr);
+    }
 
     const token = jwt.sign(
       { userId: user.id, email: user.email },

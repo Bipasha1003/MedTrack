@@ -1,4 +1,5 @@
 const prisma = require('../lib/prisma');
+const { sendMedicineAddedEmail } = require('../lib/sendEmail');
 
 // GET all medicines for logged in user
 exports.getMedicines = async (req, res) => {
@@ -53,6 +54,14 @@ exports.addMedicine = async (req, res) => {
         expiryDate: new Date(expiryDate)
       }
     });
+
+    // Send confirmation email to user (non-blocking)
+    try {
+      const user = await prisma.user.findUnique({ where: { id: req.user.userId } });
+      await sendMedicineAddedEmail(user.email, user.name, medicine);
+    } catch (emailErr) {
+      console.error('Medicine added email failed:', emailErr);
+    }
 
     res.status(201).json(medicine);
   } catch (error) {
