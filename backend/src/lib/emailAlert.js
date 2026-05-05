@@ -1,19 +1,24 @@
 const cron = require('node-cron');
-const nodemailer = require('nodemailer');
 const prisma = require('./prisma');
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp-relay.brevo.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.BREVO_USER,
-    pass: process.env.BREVO_PASS,
-  },
-});
-
-const FROM = '"MedTrack" <meditrackerexpire@gmail.com>';
+const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
+const FROM = { name: 'MedTrack', email: 'meditrackerexpire@gmail.com' };
 const APP_URL = 'https://medtrack-bm.netlify.app';
+
+async function brevoSend(payload) {
+  const res = await fetch(BREVO_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': process.env.BREVO_API_KEY,
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Brevo API error: ${err}`);
+  }
+}
 
 async function checkAndSendAlerts() {
   console.log('Running daily expiry check...');
@@ -57,11 +62,11 @@ async function checkAndSendAlerts() {
     });
 
     for (const [userEmail, data] of Object.entries(byUser)) {
-      await transporter.sendMail({
-        from: FROM,
-        to: userEmail,
+      await brevoSend({
+        sender: FROM,
+        to: [{ email: userEmail, name: data.userName || 'there' }],
         subject: '⚠️ MedTrack — Medicine Expiry Alert',
-        html: `
+        htmlContent: `
           <div style="font-family: Arial, sans-serif; max-width: 520px; margin: 0 auto; background: #070b12; color: #eef2ff; border-radius: 16px; overflow: hidden;">
             <div style="background: linear-gradient(135deg, #4f8ef7, #2dd98f); padding: 28px 32px;">
               <h1 style="margin: 0; font-size: 22px; color: white;">💊 MedTrack Alert</h1>
