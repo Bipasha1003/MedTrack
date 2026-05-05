@@ -1,8 +1,19 @@
 const cron = require('node-cron');
+const nodemailer = require('nodemailer');
 const prisma = require('./prisma');
-const { Resend } = require('resend');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: 'smtp-relay.brevo.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS,
+  },
+});
+
+const FROM = '"MedTrack" <meditrackerexpire@gmail.com>';
+const APP_URL = 'https://medtrack-bm.netlify.app';
 
 async function checkAndSendAlerts() {
   console.log('Running daily expiry check...');
@@ -46,8 +57,8 @@ async function checkAndSendAlerts() {
     });
 
     for (const [userEmail, data] of Object.entries(byUser)) {
-      await resend.emails.send({
-        from: 'MedTrack <onboarding@resend.dev>',
+      await transporter.sendMail({
+        from: FROM,
         to: userEmail,
         subject: '⚠️ MedTrack — Medicine Expiry Alert',
         html: `
@@ -94,7 +105,7 @@ async function checkAndSendAlerts() {
                 </div>
               ` : ''}
               <div style="text-align: center; margin-top: 24px;">
-                <a href="https://medtrack-bm.netlify.app/dashboard"
+                <a href="${APP_URL}/dashboard"
                    style="display: inline-block; padding: 12px 28px; background: linear-gradient(135deg, #4f8ef7, #3b7de8); color: white; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 14px;">
                   Open Medicine Cabinet →
                 </a>
@@ -109,7 +120,7 @@ async function checkAndSendAlerts() {
           </div>
         `,
       });
-      console.log(`Email sent to ${userEmail}`);
+      console.log(`Alert email sent to ${userEmail}`);
     }
 
   } catch (error) {
@@ -117,6 +128,7 @@ async function checkAndSendAlerts() {
   }
 }
 
+// Every day at 9:00 AM UTC = 2:30 PM IST
 function startCronJob() {
   cron.schedule('0 9 * * *', checkAndSendAlerts);
   console.log('Expiry alert cron job started');
