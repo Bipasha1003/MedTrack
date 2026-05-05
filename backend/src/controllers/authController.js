@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const prisma = require('../lib/prisma');
 const bcrypt = require('bcryptjs');
-const { sendWelcomeEmail } = require('../lib/sendEmail');
+const { sendWelcomeEmail, sendLoginEmail } = require('../lib/sendEmail');
 
 // ─── Register ────────────────────────────────────────────────────────────────
 exports.register = async (req, res) => {
@@ -37,7 +37,6 @@ exports.register = async (req, res) => {
       await sendWelcomeEmail(user.email, user.name);
     } catch (emailErr) {
       console.error('Welcome email failed:', emailErr.message);
-      // Don't block registration if email fails
     }
 
     const token = jwt.sign(
@@ -85,6 +84,13 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
+
+    // ── Send login notification email ──
+    try {
+      await sendLoginEmail(user.email, user.name);
+    } catch (emailErr) {
+      console.error('Login email failed:', emailErr.message);
+    }
 
     res.json({
       token,
