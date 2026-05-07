@@ -14,7 +14,11 @@
 
 A full-stack web app that helps families track medicine expiry dates using AI label scanning, multilingual chat, and automated email alerts.
 
+<<<<<<< HEAD
 [🌐 Live Demo](https://medtrack-bm.netlify.app/) · [🐛 Report Bug](mailto:meditrackerexpire@gmail.com) · [💡 Request Feature](mailto:meditrackerexpire@gmail.com)
+=======
+[Live Demo](https://medtrack-bm.netlify.app/) · [Report Bug](mailto:meditrackerexpire@gmail.com) · [Request Feature](mailto:meditrackerexpire@gmail.com)
+>>>>>>> 70aaefea7b74df621e2106d491f842c88338dbf3
 
 </div>
 
@@ -24,7 +28,12 @@ A full-stack web app that helps families track medicine expiry dates using AI la
 
 | Landing Page | Dashboard | AI Chat |
 |---|---|---|
+<<<<<<< HEAD
 | ![Landing](https://raw.githubusercontent.com/Bipasha1003/MedTrack/main/frontend/public/Screenshots/Landing.png) | ![Dashboard](https://raw.githubusercontent.com/Bipasha1003/MedTrack/main/frontend/public/Screenshots/Dashboard.png) | ![Chat](https://raw.githubusercontent.com/Bipasha1003/MedTrack/main/frontend/public/Screenshots/AI-Chat.png) |
+=======
+| ![Landing](https://github.com/Bipasha1003/MedTrack/blob/main/frontend/public/Screenshots/Landing.png) | ![Dashboard](medicine-tracker/frontend/public/Screenshots/Dashboard.png) | ![Chat](medicine-tracker/frontend/public/Screenshots/AI-Chat.png) |
+
+>>>>>>> 70aaefea7b74df621e2106d491f842c88338dbf3
 
 ---
 
