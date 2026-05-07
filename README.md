@@ -15,7 +15,7 @@
 
 A full-stack web app that helps families track medicine expiry dates using AI label scanning, multilingual chat, and daily email alerts.
 
-[Live Demo]([https://medtrack-app.vercel.app](https://medtrack-bm.netlify.app/)) · [Report Bug](mailto:meditrackerexpire@gmail.com) · [Request Feature](mailto:meditrackerexpire@gmail.com)
+[Live Demo](https://medtrack-bm.netlify.app/) · [Report Bug](mailto:meditrackerexpire@gmail.com) · [Request Feature](mailto:meditrackerexpire@gmail.com)
 
 </div>
 
