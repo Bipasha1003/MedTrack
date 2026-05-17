@@ -68,7 +68,7 @@ export default function Login() {
       padding: '24px', position: 'relative', overflow: 'hidden',
     }}>
 
-      {/* ← Back to home */}
+      {/* Back to home */}
       <Link to="/" style={{
         position: 'absolute', top: '24px', left: '24px',
         display: 'flex', alignItems: 'center', gap: '6px',
@@ -98,14 +98,10 @@ export default function Login() {
           </p>
         </div>
 
-        {/* ══════════════════════════════════ */}
-        {/* FORGOT PASSWORD CARD              */}
-        {/* ══════════════════════════════════ */}
+        {/* ── FORGOT PASSWORD CARD ── */}
         {showForgot ? (
           <div style={{ background: '#0d1220', borderRadius: '20px', padding: '32px', border: '1px solid rgba(255,255,255,0.07)', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}>
-
             {forgotSent ? (
-              /* Success state */
               <div style={{ textAlign: 'center', padding: '12px 0' }}>
                 <div style={{ fontSize: '48px', marginBottom: '16px' }}>📧</div>
                 <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '18px', fontWeight: '600', color: '#2dd98f', marginBottom: '10px' }}>
@@ -122,7 +118,6 @@ export default function Login() {
                 }}>← Back to Login</button>
               </div>
             ) : (
-              /* Email input form */
               <form onSubmit={handleForgotPassword}>
                 <div style={{ marginBottom: '24px' }}>
                   <label style={labelStyle}>Email Address</label>
@@ -138,7 +133,6 @@ export default function Login() {
                     We'll send a reset link to this email address.
                   </p>
                 </div>
-
                 <button type="submit" disabled={forgotLoading} style={{
                   width: '100%', padding: '14px', borderRadius: '10px', fontSize: '15px',
                   fontFamily: 'Syne, sans-serif', fontWeight: '600', color: 'white', border: 'none',
@@ -147,7 +141,6 @@ export default function Login() {
                 }}>
                   {forgotLoading ? 'Sending...' : 'Send Reset Link →'}
                 </button>
-
                 <button type="button" onClick={() => setShowForgot(false)} style={{
                   width: '100%', marginTop: '12px', padding: '12px', borderRadius: '10px',
                   fontSize: '14px', color: '#7d8faa', background: 'rgba(255,255,255,0.04)',
@@ -158,10 +151,9 @@ export default function Login() {
               </form>
             )}
           </div>
+
         ) : (
-          /* ══════════════════════════════════ */
-          /* LOGIN CARD                         */
-          /* ══════════════════════════════════ */
+          /* ── LOGIN CARD ── */
           <div style={{ background: '#0d1220', borderRadius: '20px', padding: '32px', border: '1px solid rgba(255,255,255,0.07)', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}>
             <form onSubmit={handleSubmit}>
 
@@ -169,7 +161,7 @@ export default function Login() {
               <div style={{ marginBottom: '20px' }}>
                 <label style={labelStyle}>Email</label>
                 <input
-                  type="email" value={form.email} required autoComplete="new-email"
+                  type="email" value={form.email} required
                   onChange={e => setForm({ ...form, email: e.target.value })}
                   placeholder="you@example.com"
                   style={inputStyle}
@@ -184,31 +176,36 @@ export default function Login() {
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    value={form.password} required autoComplete="new-password"
+                    value={form.password} required
                     onChange={e => setForm({ ...form, password: e.target.value })}
                     placeholder="••••••••"
                     style={{ ...inputStyle, paddingRight: '48px' }}
                     onFocus={e => e.target.style.borderColor = 'rgba(79,142,247,0.5)'}
                     onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
                   />
-                  {/* Eye toggle */}
-                  <button type="button" onClick={() => setShowPassword(p => !p)} style={{
-                    position: 'absolute', right: '14px',
-                    background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
-                    color: showPassword ? '#4f8ef7' : '#3d4f66',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'color 0.2s ease',
-                  }}
+                  {/* 👁 Eye toggle button */}
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(p => !p)}
+                    style={{
+                      position: 'absolute', right: '14px',
+                      background: 'none', border: 'none', cursor: 'pointer', padding: '4px',
+                      color: showPassword ? '#4f8ef7' : '#3d4f66',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      transition: 'color 0.2s ease',
+                    }}
                     onMouseEnter={e => e.currentTarget.style.color = '#4f8ef7'}
                     onMouseLeave={e => e.currentTarget.style.color = showPassword ? '#4f8ef7' : '#3d4f66'}
                   >
                     {showPassword ? (
+                      /* Eye with slash — currently showing, click to hide */
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
                         <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
                         <line x1="1" y1="1" x2="23" y2="23"/>
                       </svg>
                     ) : (
+                      /* Eye open — currently hidden, click to show */
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                         <circle cx="12" cy="12" r="3"/>
@@ -218,13 +215,16 @@ export default function Login() {
                 </div>
               </div>
 
-              {/* Forgot password link */}
+              {/* Forgot password link — right aligned under password */}
               <div style={{ textAlign: 'right', marginBottom: '24px' }}>
-                <button type="button" onClick={() => setShowForgot(true)} style={{
-                  background: 'none', border: 'none', cursor: 'pointer',
-                  fontSize: '13px', color: '#4f8ef7', fontWeight: '500',
-                  transition: 'opacity 0.2s ease',
-                }}
+                <button
+                  type="button"
+                  onClick={() => setShowForgot(true)}
+                  style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    fontSize: '13px', color: '#4f8ef7', fontWeight: '500',
+                    transition: 'opacity 0.2s ease', padding: '4px 0',
+                  }}
                   onMouseEnter={e => e.currentTarget.style.opacity = '0.7'}
                   onMouseLeave={e => e.currentTarget.style.opacity = '1'}
                 >
@@ -232,7 +232,7 @@ export default function Login() {
                 </button>
               </div>
 
-              {/* Sign in button */}
+              {/* Sign In button */}
               <button type="submit" disabled={loading} style={{
                 width: '100%', padding: '14px', borderRadius: '10px', fontSize: '15px',
                 fontFamily: 'Syne, sans-serif', fontWeight: '600', color: 'white',
@@ -247,7 +247,6 @@ export default function Login() {
               </button>
             </form>
 
-            {/* Divider */}
             <div style={{ margin: '24px 0', display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.07)' }} />
               <span style={{ color: '#3d4f66', fontSize: '13px' }}>or</span>

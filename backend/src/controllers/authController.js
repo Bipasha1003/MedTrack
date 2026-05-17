@@ -26,7 +26,7 @@ exports.register = async (req, res) => {
       data: { name, email, password: hashedPassword, phone: phone || null },
     });
 
-    // Send welcome email
+    // Send welcome email (non-blocking)
     try {
       await sendWelcomeEmail(user.email, user.name);
     } catch (emailErr) {
@@ -159,14 +159,14 @@ exports.forgotPassword = async (req, res) => {
 
     const user = await prisma.user.findUnique({ where: { email } });
 
-    // Always respond with success even if email not found (security)
+    // Always respond success even if email not found (security best practice)
     if (!user) {
       return res.json({ message: 'If that email exists, a reset link has been sent.' });
     }
 
     // Generate secure token
     const resetToken = crypto.randomBytes(32).toString('hex');
-    const resetExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+    const resetExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour from now
 
     // Save token to database
     await prisma.user.update({
@@ -177,7 +177,7 @@ exports.forgotPassword = async (req, res) => {
       },
     });
 
-    // Send reset email
+    // Build reset URL and send email
     const resetUrl = `https://medtrack-bm.netlify.app/reset-password?token=${resetToken}`;
     await sendPasswordResetEmail(user.email, user.name, resetUrl);
 
@@ -199,11 +199,11 @@ exports.resetPassword = async (req, res) => {
       return res.status(400).json({ error: 'Password must be at least 6 characters' });
     }
 
-    // Find user with this token that hasn't expired
+    // ✅ FIX: was `resetToken` (variable name), must be the field name in where clause
     const user = await prisma.user.findFirst({
       where: {
-        resetToken,
-        resetTokenExpiry: { gt: new Date() },
+        resetToken: token,                      // ← fixed: was `resetToken` (undefined var)
+        resetTokenExpiry: { gt: new Date() },   // token not expired
       },
     });
 
@@ -211,7 +211,7 @@ exports.resetPassword = async (req, res) => {
       return res.status(400).json({ error: 'Reset link is invalid or has expired' });
     }
 
-    // Update password and clear token
+    // Update password and clear the token so it can't be reused
     const hashed = await bcrypt.hash(newPassword, 10);
     await prisma.user.update({
       where: { id: user.id },
