@@ -8,15 +8,16 @@ const {
   getMe,
   updateProfile,
   changePassword,
+  forgotPassword,
+  resetPassword,
 } = require('../controllers/authController');
 
-// Public routes — no token needed
-router.post('/register', register);
-router.post('/login',    login);
-
-// Protected routes — token required
+router.post('/register',         register);
+router.post('/login',            login);
 router.get('/me',                auth, getMe);
-router.put('/profile',           auth, updateProfile);    // Profile page → Save Changes
-router.put('/change-password',   auth, changePassword);   // Profile page → Update Password
+router.put('/profile',           auth, updateProfile);
+router.put('/change-password',   auth, changePassword);
+router.post('/forgot-password',  forgotPassword);
+router.post('/reset-password',   resetPassword);
 
 module.exports = router;

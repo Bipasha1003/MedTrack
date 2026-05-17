@@ -10,6 +10,7 @@ import Scan        from './pages/Scan';
 import Chat        from './pages/Chat';
 import Profile     from './pages/Profile';
 import Navbar      from './components/Navbar';
+import ResetPassword from './pages/ResetPassword';
 
 // ─────────────────────────────────────────────
 // Mini contact footer — shown on every app page
@@ -213,6 +214,8 @@ export default function App() {
           <Route path="/chat"      element={<ProtectedRoute><Chat /></ProtectedRoute>} />
           <Route path="/profile"   element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
+          <Route path="/reset-password" element={<ResetPassword />} />
+          
           {/* Fallback */}
           <Route path="*"          element={<Navigate to="/" replace />} />
         </Routes>
