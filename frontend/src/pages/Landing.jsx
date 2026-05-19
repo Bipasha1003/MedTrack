@@ -17,7 +17,6 @@ const steps = [
   { num: '04', title: 'Never worry again', desc: 'MedTrack watches your medicine cabinet 24/7 so you and your family always stay safe.' },
 ];
 
-// ── SVG Social Icons ──
 const LinkedInIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -52,26 +51,11 @@ const SOCIALS = [
   { Icon: YouTubeIcon,   href: 'https://youtube.com',                                    title: 'YouTube',   color: '#FF0000' },
 ];
 
-// ── Footer heading with line that stays within its column ──
 function FooterHeading({ children }) {
   return (
     <div style={{ marginBottom: '20px' }}>
-      <h4 style={{
-        fontFamily: 'Outfit, sans-serif',
-        fontSize: '15px', fontWeight: '700',
-        color: '#eef2ff',
-        textTransform: 'uppercase',
-        letterSpacing: '1.8px',
-        marginBottom: '10px',
-        margin: 0,
-        paddingBottom: '10px',
-      }}>{children}</h4>
-      <div style={{
-        height: '1px',
-        width: '100%',
-        background: 'linear-gradient(to right, rgba(79,142,247,0.6), rgba(45,217,143,0.2) 50%, transparent)',
-        marginBottom: '0',
-      }} />
+      <h4 style={{ fontFamily: 'Outfit, sans-serif', fontSize: '15px', fontWeight: '700', color: '#eef2ff', textTransform: 'uppercase', letterSpacing: '1.8px', margin: 0, paddingBottom: '10px' }}>{children}</h4>
+      <div style={{ height: '1px', width: '100%', background: 'linear-gradient(to right, rgba(79,142,247,0.6), rgba(45,217,143,0.2) 50%, transparent)' }} />
     </div>
   );
 }
@@ -91,12 +75,6 @@ export default function Landing() {
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
-  const navLinkStyle = {
-    fontSize: '14px', color: '#7d8faa', background: 'none',
-    border: 'none', cursor: 'pointer', padding: '4px 0',
-    transition: 'color 0.2s ease', fontFamily: 'Plus Jakarta Sans, sans-serif',
-  };
-
   return (
     <div style={{ background: '#070b12', color: '#eef2ff', fontFamily: 'Plus Jakarta Sans, sans-serif', overflowX: 'hidden' }}>
 
@@ -104,88 +82,149 @@ export default function Landing() {
       <div style={{ position: 'fixed', top: '-200px', right: '-100px', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(79,142,247,0.4), transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0, opacity: 0.3 }} />
       <div style={{ position: 'fixed', bottom: '-100px', left: '-100px', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(45,217,143,0.3), transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0, opacity: 0.3 }} />
 
-      {/* ── NAVBAR ── */}
+      {/* ══════════════════════════════════════
+          NAVBAR — fully responsive
+          ══════════════════════════════════════ */}
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
-        height: '64px', display: 'flex', alignItems: 'center',
-        padding: '0 5%', justifyContent: 'space-between',
-        background: scrolled ? 'rgba(7,11,18,0.95)' : 'rgba(7,11,18,0.6)',
+        height: '60px', display: 'flex', alignItems: 'center',
+        padding: '0 16px',
+        justifyContent: 'space-between',
+        background: scrolled ? 'rgba(7,11,18,0.97)' : 'rgba(7,11,18,0.85)',
         backdropFilter: 'blur(24px)',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.07)' : '1px solid transparent',
+        borderBottom: '1px solid rgba(255,255,255,0.07)',
         transition: 'all 0.3s ease',
-        boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.3)' : 'none',
+        boxSizing: 'border-box',
       }}>
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-          <img src="/icon.png" alt="MedTrack" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
-          <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: '700', fontSize: '22px', letterSpacing: '-0.4px' }}>
+
+        {/* Logo — left */}
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', flexShrink: 0 }}>
+          <img src="/icon.png" alt="MedTrack" style={{ width: '34px', height: '34px', objectFit: 'contain' }} />
+          <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: '700', fontSize: '18px', letterSpacing: '-0.4px', whiteSpace: 'nowrap' }}>
             <span style={{ color: '#4f8ef7' }}>Med</span><span style={{ color: '#2dd98f' }}>Track</span>
           </span>
         </Link>
 
-        <div style={{ display: 'flex', gap: '36px', alignItems: 'center' }} className="hide-mobile">
+        {/* Desktop nav links — center (hidden on mobile) */}
+        <div style={{ display: 'flex', gap: '28px', alignItems: 'center' }} className="hide-mobile">
           {[{ label: 'Home', id: 'home' }, { label: 'Features', id: 'features' }, { label: 'How it works', id: 'how-it-works' }, { label: 'Contact', id: 'contact' }].map(link => (
             <button key={link.id} onClick={() => scrollTo(link.id)} style={{
-              fontSize: '16px', fontWeight: '500', color: '#c8d6e8',
+              fontSize: '14px', fontWeight: '500', color: '#c8d6e8',
               background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0',
-              fontFamily: 'Plus Jakarta Sans, sans-serif',
-              transition: 'color 0.2s ease',
+              fontFamily: 'Plus Jakarta Sans, sans-serif', transition: 'color 0.2s ease', whiteSpace: 'nowrap',
             }}
-              onMouseEnter={e => e.currentTarget.style.color = '#ffffff'}
+              onMouseEnter={e => e.currentTarget.style.color = '#fff'}
               onMouseLeave={e => e.currentTarget.style.color = '#c8d6e8'}
             >{link.label}</button>
           ))}
         </div>
 
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-          <Link to="/login">
-            <button style={{ padding: '8px 18px', borderRadius: '8px', fontSize: '15px', color: '#7d8faa', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer', transition: 'all .2s', fontFamily: 'Plus Jakarta Sans, sans-serif' }}
+        {/* Right side */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+
+          {/* Desktop buttons — hidden on mobile */}
+          <Link to="/login" className="hide-mobile">
+            <button style={{
+              padding: '7px 16px', borderRadius: '8px', fontSize: '14px',
+              color: '#7d8faa', background: 'transparent',
+              border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer',
+              transition: 'all .2s', fontFamily: 'Plus Jakarta Sans, sans-serif', whiteSpace: 'nowrap',
+            }}
               onMouseEnter={e => { e.currentTarget.style.color = '#eef2ff'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
-              onMouseLeave={e => { e.currentTarget.style.color = '#abbbd3'; e.currentTarget.style.background = 'transparent'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = '#7d8faa'; e.currentTarget.style.background = 'transparent'; }}
             >Log in</button>
           </Link>
-          <Link to="/register">
-            <button style={{ padding: '9px 22px', borderRadius: '9px', fontSize: '15px', fontFamily: 'Outfit, sans-serif', fontWeight: '600', color: '#fff', background: 'linear-gradient(135deg,#4f8ef7,#3b7de8)', boxShadow: '0 4px 20px rgba(79,142,247,0.35)', border: 'none', cursor: 'pointer', transition: 'all .2s' }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(79,142,247,0.5)'; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(79,142,247,0.35)'; }}
+          <Link to="/register" className="hide-mobile">
+            <button style={{
+              padding: '8px 18px', borderRadius: '9px', fontSize: '14px',
+              fontFamily: 'Outfit, sans-serif', fontWeight: '600', color: '#fff',
+              background: 'linear-gradient(135deg,#4f8ef7,#3b7de8)',
+              boxShadow: '0 4px 16px rgba(79,142,247,0.35)',
+              border: 'none', cursor: 'pointer', transition: 'all .2s', whiteSpace: 'nowrap',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(79,142,247,0.5)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(79,142,247,0.35)'; }}
             >Get started free →</button>
           </Link>
-          <button className="hide-desktop" onClick={() => setMobileMenuOpen(p => !p)}
-            style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: '#eef2ff', fontSize: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+
+          {/* Mobile: Login icon + hamburger */}
+          <Link to="/login" className="hide-desktop" style={{
+            padding: '7px 14px', borderRadius: '8px', fontSize: '13px',
+            color: '#7d8faa', background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            textDecoration: 'none', whiteSpace: 'nowrap',
+          }}>Log in</Link>
+
+          <button
+            className="hide-desktop"
+            onClick={() => setMobileMenuOpen(p => !p)}
+            style={{
+              width: '34px', height: '34px', borderRadius: '8px',
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              color: '#eef2ff', fontSize: '16px', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexShrink: 0,
+            }}
           >{mobileMenuOpen ? '✕' : '☰'}</button>
         </div>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile dropdown menu */}
       {mobileMenuOpen && (
-        <div className="hide-desktop" style={{ position: 'fixed', top: '64px', left: 0, right: 0, background: 'rgba(7,11,18,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.07)', zIndex: 199, padding: '16px 5%', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        <div className="hide-desktop" style={{
+          position: 'fixed', top: '60px', left: 0, right: 0,
+          background: 'rgba(7,11,18,0.98)', backdropFilter: 'blur(20px)',
+          borderBottom: '1px solid rgba(255,255,255,0.07)',
+          zIndex: 199, padding: '12px 16px 20px',
+          display: 'flex', flexDirection: 'column', gap: '4px',
+        }}>
           {[{ label: 'Home', id: 'home' }, { label: 'Features', id: 'features' }, { label: 'How it works', id: 'how-it-works' }, { label: 'Contact', id: 'contact' }].map(link => (
-            <button key={link.id} onClick={() => { scrollTo(link.id); setMobileMenuOpen(false); }} style={{ ...navLinkStyle, padding: '12px 0', fontSize: '15px', borderBottom: '1px solid rgba(255,255,255,0.05)', textAlign: 'left', width: '100%' }}>{link.label}</button>
+            <button key={link.id} onClick={() => { scrollTo(link.id); setMobileMenuOpen(false); }} style={{
+              fontSize: '15px', color: '#c8d6e8', background: 'none', border: 'none',
+              cursor: 'pointer', padding: '12px 4px', textAlign: 'left', width: '100%',
+              fontFamily: 'Plus Jakarta Sans, sans-serif',
+              borderBottom: '1px solid rgba(255,255,255,0.05)',
+            }}>{link.label}</button>
           ))}
+
+          {/* Mobile CTA button — full width inside menu */}
+          <Link to="/register" onClick={() => setMobileMenuOpen(false)} style={{ marginTop: '12px' }}>
+            <button style={{
+              width: '100%', padding: '13px', borderRadius: '10px', fontSize: '15px',
+              fontFamily: 'Outfit, sans-serif', fontWeight: '700', color: '#fff',
+              background: 'linear-gradient(135deg,#4f8ef7,#3b7de8)',
+              border: 'none', cursor: 'pointer',
+              boxShadow: '0 4px 20px rgba(79,142,247,0.4)',
+            }}>
+              ✚ Get started free →
+            </button>
+          </Link>
         </div>
       )}
 
       {/* ── HERO ── */}
-      <section id="home" style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'clamp(100px,15vw,140px) 5% clamp(60px,10vw,100px)', animation: 'fadeUp 0.5s ease both' }}>
+      <section id="home" style={{ position: 'relative', zIndex: 1, minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'clamp(90px,15vw,140px) 5% clamp(60px,10vw,100px)', animation: 'fadeUp 0.5s ease both' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', borderRadius: '20px', background: 'rgba(45,217,143,0.1)', border: '1px solid rgba(45,217,143,0.25)', fontSize: '13px', color: '#2dd98f', marginBottom: '28px' }}>
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2dd98f', display: 'inline-block', animation: 'pulse 2s ease infinite' }} />
           AI-Powered · Free to use · Trusted by families
         </div>
-        <h1 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(36px,6.5vw,68px)', fontWeight: '750', letterSpacing: '-2px', lineHeight: 1.1, maxWidth: '820px', marginBottom: '20px', color: '#eef2ff' }}>
+        <h1 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(32px,6.5vw,68px)', fontWeight: '800', letterSpacing: '-1.5px', lineHeight: 1.1, maxWidth: '820px', marginBottom: '20px', color: '#eef2ff' }}>
           Your family's medicine cabinet,{' '}
           <span style={{ background: 'linear-gradient(135deg, #4f8ef7, #2dd98f)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>always safe.</span>
         </h1>
         <p style={{ fontSize: 'clamp(15px,2vw,18px)', color: '#bbc6d6', maxWidth: '520px', lineHeight: '1.7', marginBottom: '36px' }}>
           Scan medicine labels with your camera, track expiry dates, get daily email alerts, and ask AI anything — all in one free app.
         </p>
-        <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '60px' }}>
-          <Link to="/register">
-            <button style={{ padding: '14px 32px', borderRadius: '12px', fontSize: '15px', fontFamily: 'Outfit, sans-serif', fontWeight: '600', color: '#fff', background: 'linear-gradient(135deg,#4f8ef7,#3b7de8)', boxShadow: '0 8px 30px rgba(79,142,247,0.4)', border: 'none', cursor: 'pointer', transition: 'all .2s' }}
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '60px', width: '100%', maxWidth: '480px' }}>
+          <Link to="/register" style={{ flex: '1 1 200px' }}>
+            <button style={{ width: '100%', padding: '14px 24px', borderRadius: '12px', fontSize: '15px', fontFamily: 'Outfit, sans-serif', fontWeight: '700', color: '#fff', background: 'linear-gradient(135deg,#4f8ef7,#3b7de8)', boxShadow: '0 8px 30px rgba(79,142,247,0.4)', border: 'none', cursor: 'pointer', transition: 'all .2s', whiteSpace: 'nowrap' }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 14px 40px rgba(79,142,247,0.5)'; }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(79,142,247,0.4)'; }}
             >✚ Create free account</button>
           </Link>
-          <Link to="/login">
-            <button style={{ padding: '14px 32px', borderRadius: '12px', fontSize: '15px', fontWeight: '500', color: '#eef2ff', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.13)', cursor: 'pointer', transition: 'all .2s' }}
+          <Link to="/login" style={{ flex: '1 1 140px' }}>
+            <button style={{ width: '100%', padding: '14px 24px', borderRadius: '12px', fontSize: '15px', fontWeight: '500', color: '#eef2ff', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.13)', cursor: 'pointer', transition: 'all .2s', whiteSpace: 'nowrap' }}
               onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
               onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
             >Sign in →</button>
@@ -226,7 +265,7 @@ export default function Landing() {
                   <div style={{ fontWeight: '500', fontSize: '14px', color: '#eef2ff' }}>{m.name}</div>
                   <div style={{ fontSize: '12px', color: '#7d8faa', marginTop: '2px' }}>{m.info}</div>
                 </div>
-                <span style={{ fontSize: '12px', fontWeight: '600', padding: '4px 12px', borderRadius: '20px', background: `${m.color}18`, color: m.color, border: `1px solid ${m.color}33` }}>{m.badge}</span>
+                <span style={{ fontSize: '12px', fontWeight: '600', padding: '4px 12px', borderRadius: '20px', background: `${m.color}18`, color: m.color, border: `1px solid ${m.color}33`, whiteSpace: 'nowrap' }}>{m.badge}</span>
               </div>
             ))}
           </div>
@@ -234,7 +273,7 @@ export default function Landing() {
       </section>
 
       {/* ── FEATURES ── */}
-      <section id="features" style={{ position: 'relative', zIndex: 1, padding: 'clamp(6px,10vw,100px) 5%', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="features" style={{ position: 'relative', zIndex: 1, padding: 'clamp(60px,10vw,100px) 5%', maxWidth: '1100px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 'clamp(40px,6vw,64px)' }}>
           <p style={{ fontSize: '15px', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '1.5px', color: '#4f8ef7', marginBottom: '20px' }}>Features</p>
           <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(26px,4vw,40px)', fontWeight: '700', letterSpacing: '-1px', lineHeight: 1.15, color: '#eef2ff' }}>Everything your medicine cabinet needs</h2>
@@ -281,19 +320,19 @@ export default function Landing() {
 
       {/* ── CTA ── */}
       <section style={{ position: 'relative', zIndex: 1, padding: 'clamp(60px,10vw,100px) 5%' }}>
-        <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center', background: 'linear-gradient(135deg, rgba(79,142,247,0.08), rgba(45,217,143,0.06))', borderRadius: '28px', padding: 'clamp(40px,6vw,72px) clamp(24px,5vw,64px)', border: '1px solid rgba(79,142,247,0.15)' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center', background: 'linear-gradient(135deg, rgba(79,142,247,0.08), rgba(45,217,143,0.06))', borderRadius: '28px', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,64px)', border: '1px solid rgba(79,142,247,0.15)' }}>
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>💊</div>
-          <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(24px,4vw,36px)', fontWeight: '700', letterSpacing: '-1px', marginBottom: '12px', color: '#eef2ff' }}>Keep your family safe from expired medicines</h2>
+          <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: 'clamp(22px,4vw,36px)', fontWeight: '700', letterSpacing: '-1px', marginBottom: '12px', color: '#eef2ff' }}>Keep your family safe from expired medicines</h2>
           <p style={{ fontSize: '16px', color: '#7d8faa', marginBottom: '32px', lineHeight: '1.7' }}>Free forever. Works on any device. Takes 30 seconds to set up.</p>
-          <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/register">
-              <button style={{ padding: '15px 36px', borderRadius: '12px', fontSize: '15px', fontFamily: 'Outfit, sans-serif', fontWeight: '600', color: '#fff', background: 'linear-gradient(135deg,#4f8ef7,#3b7de8)', boxShadow: '0 8px 30px rgba(79,142,247,0.4)', border: 'none', cursor: 'pointer', transition: 'all .2s' }}
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/register" style={{ flex: '1 1 200px', maxWidth: '280px' }}>
+              <button style={{ width: '100%', padding: '14px 24px', borderRadius: '12px', fontSize: '15px', fontFamily: 'Outfit, sans-serif', fontWeight: '600', color: '#fff', background: 'linear-gradient(135deg,#4f8ef7,#3b7de8)', boxShadow: '0 8px 30px rgba(79,142,247,0.4)', border: 'none', cursor: 'pointer', transition: 'all .2s' }}
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 14px 40px rgba(79,142,247,0.5)'; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(79,142,247,0.4)'; }}
               >Get started — it's free →</button>
             </Link>
-            <Link to="/login">
-              <button style={{ padding: '15px 28px', borderRadius: '12px', fontSize: '15px', fontWeight: '500', color: '#eef2ff', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.13)', cursor: 'pointer', transition: 'all .2s' }}
+            <Link to="/login" style={{ flex: '1 1 140px', maxWidth: '200px' }}>
+              <button style={{ width: '100%', padding: '14px 20px', borderRadius: '12px', fontSize: '15px', fontWeight: '500', color: '#eef2ff', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.13)', cursor: 'pointer', transition: 'all .2s' }}
                 onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
               >Already have an account</button>
@@ -316,24 +355,21 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════ */}
-      {/* ── FOOTER ──────────────────────────────────────────────── */}
-      {/* ══════════════════════════════════════════════════════════ */}
+      {/* ── FOOTER ── */}
       <footer style={{ position: 'relative', zIndex: 1, width: '100%', background: '#060a10', borderTop: '1px solid rgba(255,255,255,0.08)', overflow: 'hidden' }}>
-
         <div style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '80vw', height: '260px', background: 'radial-gradient(ellipse at center bottom, rgba(79,142,247,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         {/* Top CTA banner */}
-        <div style={{ width: '100%', boxSizing: 'border-box', background: 'linear-gradient(100deg, #0d1e3a 0%, #091a12 50%, #0d1e3a 100%)', borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '22px 5%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div style={{ width: '100%', boxSizing: 'border-box', background: 'linear-gradient(100deg, #0d1e3a 0%, #091a12 50%, #0d1e3a 100%)', borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '20px 5%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', padding: '5px 14px', borderRadius: '99px', background: 'rgba(45,217,143,0.12)', border: '1px solid rgba(45,217,143,0.3)' }}>
               <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#2dd98f', display: 'inline-block', animation: 'pulse 2s ease infinite' }} />
-              <span style={{ fontSize: '14px', fontWeight: '700', color: '#2dd98f', letterSpacing: '1px', textTransform: 'uppercase' }}>Free Forever</span>
+              <span style={{ fontSize: '13px', fontWeight: '700', color: '#2dd98f', letterSpacing: '1px', textTransform: 'uppercase' }}>Free Forever</span>
             </div>
-            <span style={{ fontSize: '18px', fontWeight: '600', color: '#eef2ff', fontFamily: 'Outfit, sans-serif' }}>MedTrack — 100% free. Always.</span>
+            <span style={{ fontSize: '16px', fontWeight: '600', color: '#eef2ff', fontFamily: 'Outfit, sans-serif' }}>MedTrack — 100% free. Always.</span>
           </div>
           <Link to="/register">
-            <button style={{ padding: '10px 26px', borderRadius: '9px', fontSize: '16px', fontFamily: 'Outfit, sans-serif', fontWeight: '700', color: '#fff', background: 'linear-gradient(135deg, #4f8ef7, #2dd98f)', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', boxShadow: '0 4px 18px rgba(79,142,247,0.38)', transition: 'all .2s' }}
+            <button style={{ padding: '10px 24px', borderRadius: '9px', fontSize: '15px', fontFamily: 'Outfit, sans-serif', fontWeight: '700', color: '#fff', background: 'linear-gradient(135deg, #4f8ef7, #2dd98f)', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', boxShadow: '0 4px 18px rgba(79,142,247,0.38)', transition: 'all .2s' }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(79,142,247,0.5)'; }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 18px rgba(79,142,247,0.38)'; }}
             >Get started now →</button>
@@ -341,47 +377,41 @@ export default function Landing() {
         </div>
 
         {/* Main grid */}
-        <div style={{ width: '100%', boxSizing: 'border-box', padding: '56px 5% 44px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '48px 40px' }}>
+        <div style={{ width: '100%', boxSizing: 'border-box', padding: '56px 5% 44px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px 32px' }}>
 
-          {/* Brand + Social */}
+          {/* Brand */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
-              <img src="/icon.png" alt="MedTrack" style={{ width: '38px', height: '38px', objectFit: 'contain' }} />
-              <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: '750', fontSize: '20px', letterSpacing: '-0.5px' }}>
+              <img src="/icon.png" alt="MedTrack" style={{ width: '36px', height: '36px', objectFit: 'contain' }} />
+              <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: '700', fontSize: '18px', letterSpacing: '-0.5px' }}>
                 <span style={{ color: '#4f8ef7' }}>Med</span><span style={{ color: '#2dd98f' }}>Track</span>
               </span>
             </div>
-            <p style={{ fontSize: '16px', color: '#a5b2c6', lineHeight: '1.8', marginBottom: '22px', maxWidth: '220px' }}>
+            <p style={{ fontSize: '15px', color: '#a5b2c6', lineHeight: '1.8', marginBottom: '20px', maxWidth: '220px' }}>
               Never use an expired medicine again. Smart, AI-powered medicine cabinet for your entire family.
             </p>
-            <p style={{ fontSize: '13px', fontWeight: '700', color: '#4f8ef7', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '12px' }}>Follow Us</p>
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            <p style={{ fontSize: '12px', fontWeight: '700', color: '#4f8ef7', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '10px' }}>Follow Us</p>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               {SOCIALS.map(({ Icon, href, title, color }) => (
                 <a key={title} href={href} target="_blank" rel="noopener noreferrer" title={title}
-                  style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7d8faa', textDecoration: 'none', transition: 'all 0.2s ease' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = `${color}22`; e.currentTarget.style.borderColor = `${color}55`; e.currentTarget.style.color = color; e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = `0 6px 20px ${color}33`; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#7d8faa'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+                  style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7d8faa', textDecoration: 'none', transition: 'all 0.2s ease' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = `${color}22`; e.currentTarget.style.borderColor = `${color}55`; e.currentTarget.style.color = color; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#7d8faa'; e.currentTarget.style.transform = 'translateY(0)'; }}
                 ><Icon /></a>
               ))}
             </div>
           </div>
 
+          {/* User Area */}
           <div>
             <FooterHeading>User Area</FooterHeading>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '13px' }}>
-              {[
-                { label: 'Dashboard',    icon: '⬡', to: '/dashboard' },
-                { label: 'Scan Label',   icon: '◎', to: '/scan' },
-                { label: 'Add Medicine', icon: '+', to: '/add' },
-                { label: 'AI Chat',      icon: '◈', to: '/chat' },
-                { label: 'My Profile',   icon: '👤', to: '/profile' },
-              ].map(l => (
-                <Link key={l.to} to={l.to}
-                  style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', color: '#7d8faa', textDecoration: 'none', transition: 'all .2s ease' }}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {[{ label: 'Dashboard', icon: '⬡', to: '/dashboard' }, { label: 'Scan Label', icon: '◎', to: '/scan' }, { label: 'Add Medicine', icon: '+', to: '/add' }, { label: 'AI Chat', icon: '◈', to: '/chat' }, { label: 'My Profile', icon: '👤', to: '/profile' }].map(l => (
+                <Link key={l.to} to={l.to} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '15px', color: '#7d8faa', textDecoration: 'none', transition: 'all .2s ease' }}
                   onMouseEnter={e => { e.currentTarget.style.color = '#eef2ff'; e.currentTarget.style.paddingLeft = '4px'; }}
                   onMouseLeave={e => { e.currentTarget.style.color = '#7d8faa'; e.currentTarget.style.paddingLeft = '0'; }}
                 >
-                  <span style={{ fontSize: '14px', width: '16px', textAlign: 'center', color: '#4f8ef7', flexShrink: 0 }}>{l.icon}</span>
+                  <span style={{ fontSize: '13px', width: '16px', textAlign: 'center', color: '#4f8ef7', flexShrink: 0 }}>{l.icon}</span>
                   {l.label}
                 </Link>
               ))}
@@ -391,75 +421,67 @@ export default function Landing() {
           {/* Navigate */}
           <div>
             <FooterHeading>Navigate</FooterHeading>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '13px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {[{ label: 'Home', id: 'home' }, { label: 'Features', id: 'features' }, { label: 'How it works', id: 'how-it-works' }, { label: 'Contact', id: 'contact' }].map(l => (
-                <button key={l.id} onClick={() => scrollTo(l.id)}
-                  style={{ fontSize: '14px', color: '#7d8faa', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0, fontFamily: 'Plus Jakarta Sans, sans-serif', transition: 'all .2s ease' }}
+                <button key={l.id} onClick={() => scrollTo(l.id)} style={{ fontSize: '15px', color: '#7d8faa', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0, fontFamily: 'Plus Jakarta Sans, sans-serif', transition: 'all .2s ease' }}
                   onMouseEnter={e => { e.currentTarget.style.color = '#eef2ff'; e.currentTarget.style.paddingLeft = '4px'; }}
                   onMouseLeave={e => { e.currentTarget.style.color = '#7d8faa'; e.currentTarget.style.paddingLeft = '0'; }}
                 >{l.label}</button>
               ))}
             </div>
-            <div style={{ marginTop: '28px', background: 'linear-gradient(135deg, rgba(79,142,247,0.1), rgba(45,217,143,0.07))', border: '1px solid rgba(79,142,247,0.2)', borderRadius: '12px', padding: '14px 16px' }}>
+            <div style={{ marginTop: '24px', background: 'linear-gradient(135deg, rgba(79,142,247,0.1), rgba(45,217,143,0.07))', border: '1px solid rgba(79,142,247,0.2)', borderRadius: '12px', padding: '14px 16px' }}>
               <div style={{ fontSize: '13px', fontWeight: '700', color: '#eef2ff', marginBottom: '4px' }}>🤖 AI-Powered</div>
               <div style={{ fontSize: '12px', color: '#7d8faa', lineHeight: '1.6' }}>Scan · Chat · Alerts<br />All in one place</div>
             </div>
           </div>
 
-          {/* Contact Us */}
+          {/* Contact */}
           <div>
             <FooterHeading>Contact Us</FooterHeading>
-            <a href="mailto:meditrackerexpire@gmail.com"
-              style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '13px', borderRadius: '11px', marginBottom: '10px', background: 'rgba(79,142,247,0.07)', border: '1px solid rgba(79,142,247,0.18)', textDecoration: 'none', transition: 'all .2s' }}
+            <a href="mailto:meditrackerexpire@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '13px', borderRadius: '11px', marginBottom: '10px', background: 'rgba(79,142,247,0.07)', border: '1px solid rgba(79,142,247,0.18)', textDecoration: 'none', transition: 'all .2s' }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(79,142,247,0.15)'; e.currentTarget.style.borderColor = 'rgba(79,142,247,0.35)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(79,142,247,0.07)'; e.currentTarget.style.borderColor = 'rgba(79,142,247,0.18)'; }}
             >
               <span style={{ fontSize: '18px' }}>✉</span>
               <div>
-                <div style={{ fontSize: '13px', color: '#4f8ef7', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '2px' }}>Email</div>
+                <div style={{ fontSize: '12px', color: '#4f8ef7', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '2px' }}>Email</div>
                 <div style={{ fontSize: '13px', color: '#c8d6e8', wordBreak: 'break-all' }}>meditrackerexpire@gmail.com</div>
               </div>
             </a>
-            <a href="tel:+916290747227"
-              style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '13px', borderRadius: '11px', marginBottom: '10px', background: 'rgba(45,217,143,0.07)', border: '1px solid rgba(45,217,143,0.18)', textDecoration: 'none', transition: 'all .2s' }}
+            <a href="tel:+916290747227" style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '13px', borderRadius: '11px', marginBottom: '10px', background: 'rgba(45,217,143,0.07)', border: '1px solid rgba(45,217,143,0.18)', textDecoration: 'none', transition: 'all .2s' }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(45,217,143,0.14)'; e.currentTarget.style.borderColor = 'rgba(45,217,143,0.35)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(45,217,143,0.07)'; e.currentTarget.style.borderColor = 'rgba(45,217,143,0.18)'; }}
             >
               <span style={{ fontSize: '18px' }}>📞</span>
               <div>
-                <div style={{ fontSize: '13px', color: '#2dd98f', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '2px' }}>Support</div>
+                <div style={{ fontSize: '12px', color: '#2dd98f', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '2px' }}>Support</div>
                 <div style={{ fontSize: '13px', color: '#c8d6e8' }}>+91 62907 47227</div>
               </div>
             </a>
             <div style={{ display: 'flex', gap: '8px' }}>
               <div style={{ flex: 1, padding: '11px', borderRadius: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                <div style={{ fontSize: '13px', color: '#4f8ef7', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '4px' }}>🕐 Hours</div>
+                <div style={{ fontSize: '12px', color: '#4f8ef7', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '4px' }}>🕐 Hours</div>
                 <div style={{ fontSize: '12px', color: '#c8d6e8', lineHeight: '1.6' }}>Mon–Sat<br />9am – 6pm IST</div>
               </div>
               <div style={{ flex: 1, padding: '11px', borderRadius: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                <div style={{ fontSize: '13px', color: '#2dd98f', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '4px' }}>📍 Location</div>
+                <div style={{ fontSize: '12px', color: '#2dd98f', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '4px' }}>📍 Location</div>
                 <div style={{ fontSize: '12px', color: '#c8d6e8', lineHeight: '1.6' }}>Kolkata<br />West Bengal, IN</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Gradient divider */}
         <div style={{ width: '100%', height: '1px', background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0.1) 80%, transparent)' }} />
 
-        {/* Bottom bar */}
         <div style={{ width: '100%', boxSizing: 'border-box', padding: '20px 5%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-          <span style={{ fontSize: '14px', color: '#3d4f66' }}>
-            © 2026 <strong style={{ color: '#7d8faa', fontFamily: 'Outfit, sans-serif' }}>MedTrack</strong>. All rights reserved. Made with ♥ in India.
-          </span>
+          <span style={{ fontSize: '13px', color: '#3d4f66' }}>© 2026 <strong style={{ color: '#7d8faa', fontFamily: 'Outfit, sans-serif' }}>MedTrack</strong>. All rights reserved. Made with ♥ in India.</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
             <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#2dd98f', display: 'inline-block', animation: 'pulse 2s ease infinite' }} />
-            <span style={{ fontSize: '14px', color: '#3d4f66', fontWeight: '500' }}>All systems operational</span>
+            <span style={{ fontSize: '13px', color: '#3d4f66', fontWeight: '500' }}>All systems operational</span>
           </div>
-          <div style={{ display: 'flex', gap: '20px' }}>
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
             {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map(l => (
-              <a key={l} href="#"
-                style={{ fontSize: '14px', color: '#3d4f66', textDecoration: 'none', transition: 'color .2s', fontWeight: '500' }}
+              <a key={l} href="#" style={{ fontSize: '13px', color: '#3d4f66', textDecoration: 'none', transition: 'color .2s', fontWeight: '500' }}
                 onMouseEnter={e => e.currentTarget.style.color = '#eef2ff'}
                 onMouseLeave={e => e.currentTarget.style.color = '#3d4f66'}
               >{l}</a>
